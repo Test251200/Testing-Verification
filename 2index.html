@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Email Verification Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 20px 20px 20px;
+    }
+    .logo {
+      width: 350px;
+      height: auto;
+      margin-bottom: 50px;
+    }
+    h1.vc_custom_heading.vc_do_custom_heading {
+      font-size: 30px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    form {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.5);
+      max-width: 400px;
+      width: 100%;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background-color: #000;
+      color: #fff;
+    }
+    .submit-button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background-color: #3498db;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    .submit-button:hover {
+      background-color: #2980b9;
+    }
+    .submit-button .spin-cover {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-block;
+    }
+    .loading-icon.animate-spin {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+      font-style: normal;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .info {
+      margin-top: 20px;
+      color: #ccc;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      max-width: 400px;
+      text-align: center;
+    }
+    @media screen and (max-width: 600px) {
+      .logo {
+        width: 90%;
+      }
+      form, .info {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <img class="logo" alt="Raftech" 
+       src="https://www.raftech-solutions.com/wp-content/uploads/2024/09/Raftech-logo.svg" 
+       srcset="https://www.raftech-solutions.com/wp-content/uploads/2024/09/Raftech-logo.svg 1x, 
+               https://www.raftech-solutions.com/wp-content/uploads/2024/09/Raftech-logo.svg 2x">
+
+  <h1 class="vc_custom_heading vc_do_custom_heading" style="font-size: 30px;">
+    Verify your Email
+  </h1>
+
+  <!-- Formspree AJAX Form -->
+  <form id="signupForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="email">Email ID:</label>
+    <input type="email" id="email" name="email" required />
+
+    <button type="submit" class="submit-button">
+      <span class="text">Submit</span>
+      <span class="spin-cover">
+        <i class="loading-icon icon-cog animate-spin"></i>
+      </span>
+    </button>
+  </form>
+
+  <div class="info">
+    Email verification is important because it helps confirm your identity, protect information, and prevent unauthorized access. Verifying email addresses ensures secure communication within the organization.
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if(name === '' || email === '') {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Prepare form data
+      const data = new FormData();
+      data.append('name', name);
+      data.append('email', email);
+
+      try {
+        // Send form data to Formspree
+        const response = await fetch('https://formspree.io/f/mldwqbpn', {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Redirect after successful submission
+          window.location.href = 'https://pmascarenhasraftech.github.io/Raftech-phishing-test/';
+        } else {
+          alert('There was a problem submitting your form. Please try again.');
+        }
+      } catch (error) {
+        alert('There was a problem submitting your form. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>
